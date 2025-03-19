@@ -8,6 +8,9 @@
 		"dockerfile": "Dockerfile"
 	},
 
+	// Create hooks for gitleaks (rerunning it is not troublesome, and will just do nothing)
+	"postCreateCommand": "pre-commit autoupdate && pre-commit install",
+
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {

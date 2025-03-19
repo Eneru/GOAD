@@ -66,6 +66,9 @@ RUN pipx install --include-deps ansible && \
 # Install mkdocs material
 RUN pipx install --include-deps mkdocs-material
 
+# Install pre-commit
+RUN pipx install --include-deps pre-commit
+
 # Prepare lang environment for ansible
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
