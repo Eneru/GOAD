@@ -37,7 +37,7 @@ jobs:
           unzip dependency-check.zip
       - name: Run Dependency Check
         run: |
-          ./dependency-check/bin/dependency-check.sh --project GOAD-py --scan ${{github.workspace}}/goad --scan ${{github.workspace}}/goad.py --scan ${{github.workspace}}/pyproject.toml --out ${{github.workspace}}/reports --format JSON --prettyPrint --failOnCVSS 7 --enableExperimental --nvdApiKey "${{ secrets.NVD_API_KEY }}"
+          ./dependency-check/bin/dependency-check.sh --project GOAD-py --scan ${{github.workspace}}/goad --scan ${{github.workspace}}/goad.py --scan ${{github.workspace}}/pyproject.toml --out ${{github.workspace}}/reports --format JSON --prettyPrint --failOnCVSS 7 --noupdate --enableExperimental --nvdApiKey "${{ secrets.NVD_API_KEY }}"
           rm -rf dependency-check*
 
       - name: Upload Dependency Check report
