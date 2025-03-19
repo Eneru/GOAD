@@ -22,8 +22,8 @@ jobs:
             --prettyPrint
             --failOnCVSS 7
             --enableExperimental
-            --scan "${{github.workspace}}/goad.py"
-            --scan ${{github.workspace}}/goad
+            --scan /github/workspace/goad.py
+            --scan /github/workspace/goad
       - name: Upload Dependency Check report
         uses: actions/upload-artifact@v4
         with:
