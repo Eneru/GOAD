@@ -3,7 +3,6 @@ on:
   pull_request:
     branches:
       - main
-      - feature/add-devsecops
     types: [opened, synchronize, reopened]
 jobs:
   python-static-analysis:
@@ -33,8 +32,8 @@ jobs:
         with:
           cloud_provider: aws,azure
           disable_secrets: true
-          fail_on: high #,medium
-          path: 'requirements.yml,requirements_311.yml,playbooks.yml,ansible,template/provider,Dockerfile,.devcontainer/Dockerfile,ad/GOAD/providers,ad/GOAD-Light/providers,ad/GOAD-Mini/providers,ad/MINILAB/providers,ad/NHA/providers,ad/SCCM/providers,ad/GOAD/providers,ad/TEMPLATE/providers'
+          fail_on: high,medium
+          path: 'requirements.yml,requirements_311.yml,playbooks.yml,ansible,template/provider,Dockerfile,.devcontainer/Dockerfile,ad,extensions'
           output_path: kics-results/
       - name: Display kics results
         run: |

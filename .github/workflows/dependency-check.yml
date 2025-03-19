@@ -1,0 +1,28 @@
+name: Dependency-Check
+on:
+  pull_request:
+    branches:
+      - main
+      - feature/add-devsecops
+    types: [opened, synchronize, reopened]
+jobs:
+  dependency-check:
+    name: Dependency-Check
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: Download OWASP Dependency Check
+        run: |
+          VERSION=$(curl -s https://dependency-check.github.io/DependencyCheck/current.txt)
+          curl -Ls "https://github.com/dependency-check/DependencyCheck/releases/download/v$VERSION/dependency-check-$VERSION-release.zip" --output dependency-check.zip
+          unzip dependency-check.zip
+      - name: Run Dependency Check
+        run: |
+          ./dependency-check/bin/dependency-check.sh --project GOAD-py --scan ${{github.workspace}}/goad --scan ${{github.workspace}}/goad.py --scan ${{github.workspace}}/pyproject.toml --out ${{github.workspace}}/reports --format JSON --prettyPrint --failOnCVSS 7 --enableExperimental
+          rm -rf dependency-check*
+
+      - name: Upload Dependency Check report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dependency Check report
+          path: ${{github.workspace}}/reports
