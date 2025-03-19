@@ -1,21 +1,22 @@
-rich
-psutil
-Jinja2
-pyyaml
+- name: rich
+- name: psutil
+- name: Jinja2
+- name: pyyaml
 # Ansible
 # setuptools for python >= 3.12
-setuptools
-ansible_runner
+- name: setuptools
+- name: ansible_runner
 # fix ansible-core version to avoid breaking changes
 # ansible-core 2.18.0 min version python 3.11
-ansible-core==2.18.0
-pywinrm
+- name: ansible-core
+  version: "2.18.0"
+- name: pywinrm
 # AZURE
-azure-identity
-azure-mgmt-compute
-azure-mgmt-network
+- name: azure-identity
+- name: azure-mgmt-compute
+- name: azure-mgmt-network
 # AWS
-boto3
+- name: boto3
 # Proxmox
-proxmoxer
-requests
+- name: proxmoxer
+- name: requests
