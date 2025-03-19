@@ -1,0 +1,93 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "GOAD devcontainer",
+	"build": {
+		// Sets the run context to one level up instead of the .devcontainer folder.
+		"context": "..",
+		"dockerfile": "Dockerfile"
+	},
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"[python]": {
+					"editor.defaultFormatter": "ms-python.black-formatter",
+					"editor.formatOnType": true,
+					"editor.formatOnSave": true
+				},
+				"[terraform]": {
+					"editor.formatOnType": true,
+					"editor.formatOnSave": true
+				},
+				"[ansible]": {
+					"editor.detectIndentation": true,
+					"editor.insertSpaces": true,
+					"editor.tabSize": 2,
+					"editor.quickSuggestions": {
+						"comments": true,
+						"other": true,
+						"strings": true
+					},
+					"editor.autoIndent": "advanced",
+					"editor.formatOnSave": true
+				},
+				"[shellscript]": {
+					"files.eol": "\n",
+					"editor.defaultColorDecorators": "never",
+					"editor.formatOnSave": true
+				},
+				"files.associations": {
+					// Ansible
+					"**/defaults/**/*.yml": "yaml",
+					"**/group_vars/**/*": "yaml",
+					"**/host_vars/**/*": "yaml",
+					"**/vars/**/*.yml": "yaml",
+					"**/tasks/**/*.yml": "ansible",
+					"**/handlers/*.yml": "ansible",
+					"**/meta/*.yml": "yaml",
+					"**/roles/**/*.yml": "ansible",
+					"**/playbooks/**/*.yml": "ansible",
+					"**/ansible/**/hosts": "ini",
+					"**/ansible/**/inventory": "ini",
+					"**/ansible/templates/*.j2": "ansible-jinja",
+					"**/molecule/**/*.yml": "ansible",
+					"**/molecule/**/molecule.yml": "yaml",
+					"ansible/ansible.cfg": "ini",
+					"ansible/*.yml": "ansible"
+				},
+				"redhat.telemetry.enabled": false,
+				"telemetry.telemetryLevel": "off",
+				"ansible.python.interpreterPath": "/usr/bin/python3"
+			},
+			"extensions": [
+				// Python's extensions
+				"ms-python.black-formatter", // python formatter
+				"ms-python.python",
+				// Terraform's extensions
+				"HashiCorp.terraform",
+				"HashiCorp.HCL",
+				"4ops.terraform", // Syntax support for terraform
+				"tfsec.tfsec", // terraform sca
+				// Ansible's extensions
+				"redhat.ansible", // use ansible-linter
+				"redhat.vscode-yaml",
+				// Packer's extensions
+				"4ops.packer", // Syntax support for packer
+				// Docker's extensions
+				"exiasr.hadolint", // dockerfile linter
+				// Shell's extensions
+				"ms-vscode.PowerShell",
+				"rogalmic.bash-debug", // bash debugger
+				"timonwong.shellcheck" // bash sca
+			]
+		}
+	}
+
+	// If you need to connect to bastion / jumpbox through VPN, uncomment the following
+	// "runArgs": [
+	// 	"--cap-add=NET_ADMIN",
+	// 	"--device=/dev/net/tun"
+	// ],
+}
