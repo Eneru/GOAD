@@ -6,9 +6,28 @@ on:
       - feature/add-devsecops
     types: [opened, synchronize, reopened]
 jobs:
+  check-nvd-secret:
+    name: Check NVD API Key in Secrets
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Check secret is not empty
+        id: check
+        env:
+          nvd_secret: ${{ secrets.NVD_API_KEY }}
+        run: |
+          if [ ${{ env.nvd_secret }} != '' ]; then
+            echo 'should_run=true' >> $GITHUB_OUTPUT
+          else
+            echo 'should_run=false' >> $GITHUB_OUTPUT
+          fi
+
   dependency-check:
+    needs: [check-nvd-secret]
     name: Dependency-Check
     runs-on: ubuntu-latest
+    if: ${{ needs.check-nvd-secret.outputs.should_run == 'true' }}
     steps: 
       - uses: actions/checkout@v4
       - name: Download OWASP Dependency Check
@@ -18,7 +37,7 @@ jobs:
           unzip dependency-check.zip
       - name: Run Dependency Check
         run: |
-          ./dependency-check/bin/dependency-check.sh --project GOAD-py --scan ${{github.workspace}}/goad --scan ${{github.workspace}}/goad.py --scan ${{github.workspace}}/pyproject.toml --out ${{github.workspace}}/reports --format JSON --prettyPrint --failOnCVSS 7 --enableExperimental
+          ./dependency-check/bin/dependency-check.sh --project GOAD-py --scan ${{github.workspace}}/goad --scan ${{github.workspace}}/goad.py --scan ${{github.workspace}}/pyproject.toml --out ${{github.workspace}}/reports --format JSON --prettyPrint --failOnCVSS 7 --enableExperimental --nvdApiKey "${{ secrets.NVD_API_KEY }}"
           rm -rf dependency-check*
 
       - name: Upload Dependency Check report
