@@ -16,7 +16,6 @@ jobs:
       actions: read
       contents: read
     steps:
-      - uses: actions/checkout@v4
       - name: Perform Bandit Analysis
         uses: PyCQA/bandit-action@v1
         with:
@@ -35,7 +34,7 @@ jobs:
           cloud_provider: aws,azure
           disable_secrets: true
           fail_on: high,medium
-          path: 'requirements.yml,requirements_311.yml,playbooks.yml,ansible,template/provider,Dockerfile,.devcontainer/Dockerfile,ad/GOAD/providers,ad/GOAD-light/providers,ad/MINILAB/providers,ad/NHA/providers,ad/SCCM/providers,ad/GOAD/providers,ad/TEMPLATE/providers'
+          path: 'requirements.yml,requirements_311.yml,playbooks.yml,ansible,template/provider,Dockerfile,.devcontainer/Dockerfile,ad/GOAD/providers,ad/GOAD-Light/providers,ad/GOAD-Mini/providers,ad/MINILAB/providers,ad/NHA/providers,ad/SCCM/providers,ad/GOAD/providers,ad/TEMPLATE/providers'
           output_path: kics-results/
       - name: Display kics results
         run: |
